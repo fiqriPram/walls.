@@ -69,10 +69,16 @@ export function WallpaperCard({ item, onOpen }: WallpaperCardProps) {
 	}
 
 	return (
-		<button
-			type="button"
+		<article
 			onClick={() => onOpen(item)}
-			className="group relative overflow-hidden rounded-xl border border-border/40 bg-card text-left transition-all hover:border-border hover:shadow-sm"
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault()
+					onOpen(item)
+				}
+			}}
+			aria-label={`View wallpaper: ${item.title}`}
+			className="group relative cursor-pointer overflow-hidden rounded-xl border border-border/40 bg-card text-left transition-all hover:border-border hover:shadow-sm focus-within:ring-2 focus-within:ring-ring"
 		>
 			<div className="relative aspect-video w-full overflow-hidden bg-muted">
 				<Image
@@ -115,6 +121,6 @@ export function WallpaperCard({ item, onOpen }: WallpaperCardProps) {
 				<p className="truncate text-sm font-medium">{item.title}</p>
 				<p className="truncate text-xs text-muted-foreground">{item.author}</p>
 			</div>
-		</button>
+		</article>
 	)
 }
