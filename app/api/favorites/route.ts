@@ -9,7 +9,7 @@ const favoriteSchema = z.object({
 	deviceId: z.string().min(1).max(128),
 	item: z.object({
 		id: z.string().min(1),
-		source: z.enum(["picsum", "waifu", "ghibli"]),
+		source: z.enum(["picsum", "nekos", "ghibli"]),
 		title: z.string(),
 		author: z.string(),
 		thumb: z.string().url(),

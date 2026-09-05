@@ -181,7 +181,7 @@ import { MySource } from "./my-source";
 
 const sources: Record<string, BaseSource> = {
 	picsum: new PicsumSource(),
-	waifu: new WaifuSource(),
+	nekos: new NekosSource(),
 	ghibli: new GhibliSource(),
 	"my-source": new MySource(),
 };

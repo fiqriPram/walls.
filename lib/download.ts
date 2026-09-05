@@ -12,7 +12,17 @@ export async function downloadImage(url: string, filename: string): Promise<void
 		document.body.removeChild(a)
 		URL.revokeObjectURL(objectUrl)
 	} catch {
-		window.open(url, "_blank", "noopener,noreferrer")
+		try {
+			const proxyUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(filename)}`
+			const a = document.createElement("a")
+			a.href = proxyUrl
+			a.download = filename
+			document.body.appendChild(a)
+			a.click()
+			document.body.removeChild(a)
+		} catch {
+			window.open(url, "_blank", "noopener,noreferrer")
+		}
 	}
 }
 
@@ -22,5 +32,6 @@ export function safeFilename(title: string, source: string, id: string): string 
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/(^-|-$)+/g, "")
 		.slice(0, 40)
-	return `${slug || source}-${id}.jpg`
+	const ext = source === "ghibli" ? "jpg" : "webp"
+	return `${slug || source}-${id}.${ext}`
 }

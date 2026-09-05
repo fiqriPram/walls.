@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react"
 
 import { getPrimarySource } from "@/lib/categories"
 import { CONFIG } from "@/lib/config"
-import { getSource } from "@/lib/sources"
 import type { WallpaperItem } from "@/lib/types"
 
 export interface UseWallpapersOptions {
@@ -31,12 +30,19 @@ async function fetchPage(
 	search?: string,
 ): Promise<{ items: WallpaperItem[]; hasMore: boolean }> {
 	const sourceId = getPrimarySource(category) ?? "picsum"
-	const source = getSource(sourceId)
-	if (!source) {
-		return { items: [], hasMore: false }
+	const url = new URL("/api/wallpapers", window.location.origin)
+	url.searchParams.set("source", sourceId)
+	url.searchParams.set("category", category)
+	url.searchParams.set("page", String(page))
+	url.searchParams.set("limit", String(limit))
+	if (search) url.searchParams.set("search", search)
+
+	const res = await fetch(url.toString())
+	if (!res.ok) {
+		const errBody = (await res.json().catch(() => ({}))) as { error?: string }
+		throw new Error(errBody.error ?? `Request failed: ${res.status}`)
 	}
-	const result = await source.fetch({ category, page, limit, search })
-	return { items: result.items, hasMore: result.hasMore }
+	return (await res.json()) as { items: WallpaperItem[]; hasMore: boolean }
 }
 
 export function useWallpapers(options: UseWallpapersOptions = {}): UseWallpapersResult {
