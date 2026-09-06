@@ -1,12 +1,10 @@
 import type { SourceInfo } from "../types"
 import type { BaseSource } from "./base"
 import { GhibliSource } from "./ghibli"
-import { NekosSource } from "./neko"
 import { PicsumSource } from "./picsum"
 
 const sources: Record<string, BaseSource> = {
 	picsum: new PicsumSource(),
-	nekos: new NekosSource(),
 	ghibli: new GhibliSource(),
 }
 

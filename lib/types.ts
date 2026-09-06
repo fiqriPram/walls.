@@ -1,4 +1,4 @@
-export type SourceId = "picsum" | "nekos" | "ghibli"
+export type SourceId = "picsum" | "ghibli"
 
 export interface WallpaperItem {
 	id: string

@@ -3,12 +3,7 @@ import { z } from "zod"
 
 export const dynamic = "force-dynamic"
 
-const ALLOWED_HOSTNAMES = new Set([
-	"picsum.photos",
-	"fastly.picsum.photos",
-	"cdn.nekosapi.com",
-	"image.tmdb.org",
-])
+const ALLOWED_HOSTNAMES = new Set(["picsum.photos", "fastly.picsum.photos", "image.tmdb.org"])
 
 const querySchema = z.object({
 	url: z.string().url().max(2048),

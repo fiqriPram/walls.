@@ -7,7 +7,7 @@ import type { FetchParams } from "@/lib/types"
 export const dynamic = "force-dynamic"
 
 const querySchema = z.object({
-	source: z.enum(["picsum", "nekos", "ghibli"]),
+	source: z.enum(["picsum", "ghibli"]),
 	category: z.string().min(1).max(50),
 	page: z.coerce.number().int().min(1).max(1000).default(1),
 	limit: z.coerce.number().int().min(1).max(50).default(30),
