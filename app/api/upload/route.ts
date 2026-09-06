@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm"
+import { desc, eq, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
@@ -110,7 +110,22 @@ export async function GET(request: Request) {
 	try {
 		const countResult = await db.select({ count: sql<number>`count(*)::int` }).from(wallpapers)
 		const total = countResult[0]?.count ?? 0
-		return NextResponse.json({ total })
+		const rows = await db.select().from(wallpapers).orderBy(desc(wallpapers.createdAt))
+		const items = rows.map((row) => ({
+			id: row.id,
+			title: row.title,
+			author: row.author,
+			category: row.category,
+			thumbUrl: row.thumbUrl,
+			fullUrl: row.fullUrl,
+			downloadUrl: row.downloadUrl,
+			width: row.width,
+			height: row.height,
+			tags: row.tags ?? [],
+			description: row.description ?? undefined,
+			createdAt: row.createdAt,
+		}))
+		return NextResponse.json({ total, items })
 	} catch (e) {
 		return NextResponse.json({ error: e instanceof Error ? e.message : "Failed" }, { status: 500 })
 	}
