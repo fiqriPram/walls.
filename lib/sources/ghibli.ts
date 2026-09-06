@@ -19,7 +19,7 @@ interface GhibliFilm {
 export class GhibliSource extends BaseSource {
 	readonly id = "ghibli" as const
 	readonly name = "Studio Ghibli"
-	readonly categories = ["ghibli"]
+	readonly categories = ["anime"]
 
 	private cache: GhibliFilm[] | null = null
 

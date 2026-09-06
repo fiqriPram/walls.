@@ -6,7 +6,7 @@ export const CATEGORIES: Category[] = [
 	{ id: "abstract", label: "Abstract", sources: ["picsum"] },
 	{ id: "urban", label: "Urban", sources: ["picsum"] },
 	{ id: "dark", label: "Dark", sources: ["picsum"] },
-	{ id: "ghibli", label: "Ghibli", sources: ["ghibli"] },
+	{ id: "anime", label: "Anime", sources: ["ghibli"] },
 ]
 
 export function getCategory(id: string): Category | undefined {
