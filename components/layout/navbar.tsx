@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, LayoutDashboard } from "lucide-react"
+import { Heart, LayoutDashboard, type LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -10,14 +10,20 @@ import { cn } from "@/lib/utils"
 
 import { ThemeToggle } from "./theme-toggle"
 
-const guestLinks = [
+type NavLink = {
+	href: string
+	label: string
+	icon?: LucideIcon
+}
+
+const guestLinks: NavLink[] = [
 	{ href: "/", label: "Home" },
 	{ href: "/about", label: "About" },
 	{ href: "/login", label: "Login" },
 	{ href: "/register", label: "Register" },
 ]
 
-const authLinks = [
+const authLinks: NavLink[] = [
 	{ href: "/favorites", label: "Favorites", icon: Heart },
 	{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ]
