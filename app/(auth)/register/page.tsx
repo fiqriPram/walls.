@@ -49,7 +49,7 @@ export default function RegisterPage() {
 			<div className="w-full max-w-sm space-y-6">
 				<div className="text-center">
 					<h1 className="text-2xl font-semibold tracking-tight">Register</h1>
-					<p className="mt-1 text-sm text-muted-foreground">Create an admin account</p>
+					<p className="mt-1 text-sm text-muted-foreground">Create your account</p>
 				</div>
 
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

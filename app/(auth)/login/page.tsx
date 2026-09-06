@@ -47,7 +47,7 @@ export default function LoginPage() {
 			<div className="w-full max-w-sm space-y-6">
 				<div className="text-center">
 					<h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-					<p className="mt-1 text-sm text-muted-foreground">Sign in to manage wallpapers</p>
+					<p className="mt-1 text-sm text-muted-foreground">Sign in to access your library</p>
 				</div>
 
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

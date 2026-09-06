@@ -77,6 +77,9 @@ export const wallpapers = pgTable(
 		height: integer("height").notNull(),
 		tags: text("tags").array().default([]),
 		description: text("description"),
+		userId: text("user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
 		createdAt: timestamp("created_at").defaultNow().notNull(),
 	},
 	(table) => ({

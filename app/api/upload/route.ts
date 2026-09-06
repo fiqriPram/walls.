@@ -1,4 +1,4 @@
-import { desc, eq, sql } from "drizzle-orm"
+import { and, desc, eq, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
@@ -61,6 +61,7 @@ export async function POST(request: Request) {
 			height: data.height,
 			tags: data.tags,
 			description: data.description,
+			userId: session.user.id,
 		})
 
 		return NextResponse.json({ ok: true, externalId })
@@ -88,7 +89,9 @@ export async function DELETE(request: Request) {
 	}
 
 	try {
-		await db.delete(wallpapers).where(eq(wallpapers.id, Number(id)))
+		await db
+			.delete(wallpapers)
+			.where(and(eq(wallpapers.id, Number(id)), eq(wallpapers.userId, session.user.id)))
 		return NextResponse.json({ ok: true })
 	} catch (e) {
 		return NextResponse.json(
@@ -108,9 +111,16 @@ export async function GET(request: Request) {
 	}
 
 	try {
-		const countResult = await db.select({ count: sql<number>`count(*)::int` }).from(wallpapers)
+		const countResult = await db
+			.select({ count: sql<number>`count(*)::int` })
+			.from(wallpapers)
+			.where(eq(wallpapers.userId, session.user.id))
 		const total = countResult[0]?.count ?? 0
-		const rows = await db.select().from(wallpapers).orderBy(desc(wallpapers.createdAt))
+		const rows = await db
+			.select()
+			.from(wallpapers)
+			.where(eq(wallpapers.userId, session.user.id))
+			.orderBy(desc(wallpapers.createdAt))
 		const items = rows.map((row) => ({
 			id: row.id,
 			title: row.title,

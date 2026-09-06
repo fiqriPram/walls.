@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, LayoutDashboard, type LucideIcon } from "lucide-react"
+import { Heart, Library, type LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -25,7 +25,7 @@ const guestLinks: NavLink[] = [
 
 const authLinks: NavLink[] = [
 	{ href: "/favorites", label: "Favorites", icon: Heart },
-	{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+	{ href: "/dashboard", label: "Library", icon: Library },
 ]
 
 export function Navbar() {
