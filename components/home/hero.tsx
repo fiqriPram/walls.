@@ -92,7 +92,7 @@ export function Hero() {
 				<div className="mt-10 flex flex-col items-center gap-4">
 					<Button onClick={scrollToGallery} size="lg" className="px-8">
 						{CONFIG.heroCta}
-						<ArrowDown className="ml-2 h-4 w-4" />
+						<ArrowDown className="ml-2 h-4 w-4 animate-bounce" />
 					</Button>
 
 					<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
