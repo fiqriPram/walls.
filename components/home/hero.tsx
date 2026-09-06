@@ -1,9 +1,10 @@
 "use client"
 
-import { ArrowDown, Download, Heart, Image, Layers, Sparkles } from "lucide-react"
+import { ArrowDown, Download, Heart, Image, Layers } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
 import { CATEGORIES } from "@/lib/categories"
 import { CONFIG } from "@/lib/config"
 
@@ -15,9 +16,10 @@ const FEATURES = [
 
 export function Hero() {
 	const [counts, setCounts] = useState({ total: 0, categories: 0 })
+	const { scrollTo } = useSmoothScroll()
 
 	const scrollToGallery = () => {
-		document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth", block: "start" })
+		scrollTo("#gallery", { duration: 1.2 })
 	}
 
 	useEffect(() => {
@@ -90,7 +92,7 @@ export function Hero() {
 				<div className="mt-10 flex flex-col items-center gap-4">
 					<Button onClick={scrollToGallery} size="lg" className="px-8">
 						{CONFIG.heroCta}
-						<ArrowDown className="ml-2 h-4 w-4 animate-bounce" />
+						<ArrowDown className="ml-2 h-4 w-4" />
 					</Button>
 
 					<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
