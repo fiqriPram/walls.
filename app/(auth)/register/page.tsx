@@ -36,7 +36,7 @@ export default function RegisterPage() {
 				password: data.password,
 			})
 			toast.success("Account created")
-			router.push("/dashboard")
+			router.push("/")
 		} catch {
 			toast.error("Registration failed")
 		} finally {

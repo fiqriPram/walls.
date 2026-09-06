@@ -34,7 +34,7 @@ export default function LoginPage() {
 				password: data.password,
 			})
 			toast.success("Logged in")
-			router.push("/dashboard")
+			router.push("/")
 		} catch {
 			toast.error("Invalid credentials")
 		} finally {
