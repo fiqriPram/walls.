@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react"
 
-import { getPrimarySource } from "@/lib/categories"
 import { CONFIG } from "@/lib/config"
 import type { WallpaperItem } from "@/lib/types"
 
@@ -29,9 +28,7 @@ async function fetchPage(
 	limit: number,
 	search?: string,
 ): Promise<{ items: WallpaperItem[]; hasMore: boolean }> {
-	const sourceId = getPrimarySource(category) ?? "picsum"
 	const url = new URL("/api/wallpapers", window.location.origin)
-	url.searchParams.set("source", sourceId)
 	url.searchParams.set("category", category)
 	url.searchParams.set("page", String(page))
 	url.searchParams.set("limit", String(limit))

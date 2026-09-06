@@ -1,4 +1,4 @@
-export type SourceId = "picsum" | "ghibli"
+export type SourceId = "upload"
 
 export interface WallpaperItem {
 	id: string
@@ -11,6 +11,7 @@ export interface WallpaperItem {
 	width: number
 	height: number
 	tags: string[]
+	description?: string
 }
 
 export interface FetchParams {

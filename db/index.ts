@@ -6,9 +6,7 @@ import * as schema from "./schema"
 const databaseUrl = process.env.DATABASE_URL
 
 if (!databaseUrl) {
-	console.warn(
-		"[db] DATABASE_URL is not set. Favorites features will not work until it is configured.",
-	)
+	console.warn("[db] DATABASE_URL is not set. Features will not work until it is configured.")
 }
 
 const sql = neon(databaseUrl ?? "postgresql://placeholder:placeholder@localhost/placeholder")

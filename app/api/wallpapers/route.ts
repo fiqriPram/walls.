@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
-import { getSource } from "@/lib/sources"
-import type { FetchParams } from "@/lib/types"
+import { listWallpapers } from "@/db/queries/wallpapers"
 
 export const dynamic = "force-dynamic"
 
 const querySchema = z.object({
-	source: z.enum(["picsum", "ghibli"]),
 	category: z.string().min(1).max(50),
 	page: z.coerce.number().int().min(1).max(1000).default(1),
 	limit: z.coerce.number().int().min(1).max(50).default(30),
@@ -17,7 +15,6 @@ const querySchema = z.object({
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
 	const parsed = querySchema.safeParse({
-		source: searchParams.get("source") ?? undefined,
 		category: searchParams.get("category") ?? undefined,
 		page: searchParams.get("page") ?? undefined,
 		limit: searchParams.get("limit") ?? undefined,
@@ -31,21 +28,10 @@ export async function GET(request: Request) {
 		)
 	}
 
-	const { source, category, page, limit, search } = parsed.data
-	const sourceImpl = getSource(source)
-	if (!sourceImpl) {
-		return NextResponse.json({ error: "Unknown source" }, { status: 400 })
-	}
-	if (!sourceImpl.categories.includes(category) && category !== "all") {
-		return NextResponse.json(
-			{ error: `Category "${category}" not supported by source "${source}"` },
-			{ status: 400 },
-		)
-	}
+	const { category, page, limit, search } = parsed.data
 
 	try {
-		const params: FetchParams = { category, page, limit, search }
-		const result = await sourceImpl.fetch(params)
+		const result = await listWallpapers({ category, page, limit, search })
 		return NextResponse.json(result)
 	} catch (e) {
 		const message = e instanceof Error ? e.message : "Failed to fetch"

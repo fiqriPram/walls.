@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart } from "lucide-react"
+import { Heart, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -13,6 +13,7 @@ const links = [
 	{ href: "/", label: "Home" },
 	{ href: "/favorites", label: "Favorites" },
 	{ href: "/about", label: "About" },
+	{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ]
 
 export function Navbar() {
@@ -42,6 +43,11 @@ export function Navbar() {
 								{l.label === "Favorites" ? (
 									<span className="flex items-center gap-1.5">
 										<Heart className="h-3.5 w-3.5" />
+										{l.label}
+									</span>
+								) : l.icon ? (
+									<span className="flex items-center gap-1.5">
+										<l.icon className="h-3.5 w-3.5" />
 										{l.label}
 									</span>
 								) : (

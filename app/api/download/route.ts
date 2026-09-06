@@ -3,8 +3,6 @@ import { z } from "zod"
 
 export const dynamic = "force-dynamic"
 
-const ALLOWED_HOSTNAMES = new Set(["picsum.photos", "fastly.picsum.photos", "image.tmdb.org"])
-
 const querySchema = z.object({
 	url: z.string().url().max(2048),
 	filename: z.string().min(1).max(200),
@@ -28,16 +26,12 @@ export async function GET(request: Request) {
 		return NextResponse.json({ error: "Invalid URL" }, { status: 400 })
 	}
 
-	if (!ALLOWED_HOSTNAMES.has(target.hostname)) {
-		return NextResponse.json({ error: "Host not allowed" }, { status: 403 })
-	}
-
 	try {
 		const upstream = await fetch(target.toString(), {
 			headers: { Accept: "image/*" },
 		})
 		if (!upstream.ok) {
-			return NextResponse.json({ error: `Upstream error: ${upstream.status}` }, { status: 502 })
+			return NextResponse.json({ error: `Upstream error: ${upstream.status}` }, { status: 500 })
 		}
 		const contentType = upstream.headers.get("content-type") ?? "image/jpeg"
 		const buffer = await upstream.arrayBuffer()
@@ -52,7 +46,7 @@ export async function GET(request: Request) {
 	} catch (e) {
 		return NextResponse.json(
 			{ error: e instanceof Error ? e.message : "Download failed" },
-			{ status: 502 },
+			{ status: 500 },
 		)
 	}
 }

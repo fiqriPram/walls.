@@ -9,7 +9,7 @@ const favoriteSchema = z.object({
 	deviceId: z.string().min(1).max(128),
 	item: z.object({
 		id: z.string().min(1),
-		source: z.enum(["picsum", "ghibli"]),
+		source: z.string(),
 		title: z.string(),
 		author: z.string(),
 		thumb: z.string().url(),
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 		)
 	}
 	const { deviceId, item } = parsed.data
-	const result = await addFavorite(deviceId, item)
+	const result = await addFavorite(deviceId, { ...item, source: "upload" })
 	if (!result.ok) {
 		return NextResponse.json({ error: result.error }, { status: 500 })
 	}

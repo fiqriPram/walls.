@@ -1,12 +1,12 @@
 import type { Category, SourceId } from "./types"
 
 export const CATEGORIES: Category[] = [
-	{ id: "all", label: "All", sources: ["picsum"] },
-	{ id: "nature", label: "Nature", sources: ["picsum"] },
-	{ id: "abstract", label: "Abstract", sources: ["picsum"] },
-	{ id: "urban", label: "Urban", sources: ["picsum"] },
-	{ id: "dark", label: "Dark", sources: ["picsum"] },
-	{ id: "anime", label: "Anime", sources: ["ghibli"] },
+	{ id: "all", label: "All", sources: ["upload"] },
+	{ id: "nature", label: "Nature", sources: ["upload"] },
+	{ id: "abstract", label: "Abstract", sources: ["upload"] },
+	{ id: "urban", label: "Urban", sources: ["upload"] },
+	{ id: "dark", label: "Dark", sources: ["upload"] },
+	{ id: "anime", label: "Anime", sources: ["upload"] },
 ]
 
 export function getCategory(id: string): Category | undefined {
