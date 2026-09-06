@@ -94,17 +94,6 @@ export function Hero() {
 						{CONFIG.heroCta}
 						<ArrowDown className="ml-2 h-4 w-4 animate-bounce" />
 					</Button>
-
-					<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-						<kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
-							⌘
-						</kbd>
-						<span>+</span>
-						<kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
-							K
-						</kbd>
-						<span className="ml-1">to focus search</span>
-					</div>
 				</div>
 
 				<div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
