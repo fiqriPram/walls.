@@ -4,20 +4,28 @@ import { Heart, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { authClient } from "@/lib/auth-client"
 import { CONFIG } from "@/lib/config"
 import { cn } from "@/lib/utils"
 
 import { ThemeToggle } from "./theme-toggle"
 
-const links = [
+const guestLinks = [
 	{ href: "/", label: "Home" },
-	{ href: "/favorites", label: "Favorites" },
 	{ href: "/about", label: "About" },
+	{ href: "/login", label: "Login" },
+	{ href: "/register", label: "Register" },
+]
+
+const authLinks = [
+	{ href: "/favorites", label: "Favorites", icon: Heart },
 	{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ]
 
 export function Navbar() {
 	const pathname = usePathname()
+	const { data: session } = authClient.useSession()
+	const isAuthed = session?.user != null
 
 	return (
 		<header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -27,7 +35,7 @@ export function Navbar() {
 				</Link>
 
 				<nav className="flex items-center gap-1">
-					{links.map((l) => {
+					{(isAuthed ? authLinks : guestLinks).map((l) => {
 						const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href)
 						return (
 							<Link
@@ -40,12 +48,7 @@ export function Navbar() {
 										: "text-muted-foreground hover:text-foreground",
 								)}
 							>
-								{l.label === "Favorites" ? (
-									<span className="flex items-center gap-1.5">
-										<Heart className="h-3.5 w-3.5" />
-										{l.label}
-									</span>
-								) : l.icon ? (
+								{l.icon ? (
 									<span className="flex items-center gap-1.5">
 										<l.icon className="h-3.5 w-3.5" />
 										{l.label}
