@@ -50,9 +50,9 @@ export function Hero() {
 			<div className="absolute inset-0 -z-10 bg-linear-to-b from-muted/50 via-background to-background" />
 
 			<div className="absolute inset-0 -z-10 overflow-hidden">
-				<div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-muted/30 blur-3xl" />
-				<div className="pointer-events-none absolute -bottom-20 left-1/4 h-[300px] w-[300px] rounded-full bg-muted/20 blur-3xl" />
-				<div className="pointer-events-none absolute -bottom-20 right-1/4 h-[300px] w-[300px] rounded-full bg-muted/20 blur-3xl" />
+				<div className="pointer-events-none absolute -top-40 left-1/2 h-150 w-150 -translate-x-1/2 rounded-full bg-muted/30 blur-3xl" />
+				<div className="pointer-events-none absolute -bottom-20 left-1/4 h-75 w-75 rounded-full bg-muted/20 blur-3xl" />
+				<div className="pointer-events-none absolute -bottom-20 right-1/4 h-75 w-75 rounded-full bg-muted/20 blur-3xl" />
 			</div>
 
 			<div className="mx-auto flex min-h-[60vh] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
