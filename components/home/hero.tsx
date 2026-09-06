@@ -19,7 +19,7 @@ export function Hero() {
 	const { scrollTo } = useSmoothScroll()
 
 	const scrollToGallery = () => {
-		scrollTo("#gallery", { duration: 1.2 })
+		scrollTo("#gallery", { duration: 1.2, offset: 64 })
 	}
 
 	useEffect(() => {
