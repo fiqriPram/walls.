@@ -65,7 +65,7 @@ export default function DashboardPage() {
 		try {
 			const res = await fetch("/api/upload")
 			if (res.status === 401) {
-				router.push("/login")
+				router.push("/auth")
 				return
 			}
 			const data = await res.json()
@@ -80,7 +80,7 @@ export default function DashboardPage() {
 	useEffect(() => {
 		if (session === undefined) return
 		if (!session) {
-			router.push("/login")
+			router.push("/auth")
 			return
 		}
 		fetchWallpapers()
@@ -151,7 +151,7 @@ export default function DashboardPage() {
 
 	const handleLogout = async () => {
 		await authClient.signOut()
-		router.push("/login")
+		router.push("/auth")
 	}
 
 	const toggleForm = () => setShowForm((v) => !v)

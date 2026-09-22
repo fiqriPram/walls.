@@ -30,20 +30,20 @@ Browse curated wallpapers from multiple sources, search, filter by category, pre
 | DB | Neon Postgres (HTTP) |
 | ORM | Drizzle |
 | Linter | Biome |
-| Pkg manager | pnpm |
+| Pkg manager | bun |
 
 ## Getting Started
 
 ### 1. Prerequisites
 
 - **Node.js 20+**
-- **pnpm 9+** — `npm install -g pnpm` (or use `npx pnpm`)
+- **Bun 1.1+** — https://bun.sh (`curl -fsSL https://bun.sh/install | bash`)
 - A free **Neon** account — https://neon.tech
 
 ### 2. Install
 
 ```bash
-pnpm install
+bun install
 ```
 
 ### 3. Configure the database
@@ -59,15 +59,15 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.region.aws.neon.tech/walls?sslmode=re
 4. Push the schema to your database:
 
 ```bash
-pnpm db:migrate
+bun db:migrate
 ```
 
-(If you change the schema, regenerate migrations first with `pnpm db:generate`, then run `pnpm db:migrate` again.)
+(If you change the schema, regenerate migrations first with `bun db:generate`, then run `bun db:migrate` again.)
 
 ### 4. Run the dev server
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open http://localhost:3000
@@ -76,15 +76,15 @@ Open http://localhost:3000
 
 | Command | What it does |
 | --- | --- |
-| `pnpm dev` | Start the dev server (Turbopack) |
-| `pnpm build` | Production build |
-| `pnpm start` | Run the production build |
-| `pnpm lint` | Lint with Biome |
-| `pnpm lint:fix` | Auto-fix lint issues |
-| `pnpm format` | Format with Biome |
-| `pnpm db:migrate` | Apply Drizzle migrations to your Neon database |
-| `pnpm db:studio` | Open Drizzle Studio (GUI for your DB) |
-| `pnpm db:generate` | Generate a new SQL migration from the schema |
+| `bun dev` | Start the dev server (Turbopack) |
+| `bun build` | Production build |
+| `bun start` | Run the production build |
+| `bun lint` | Lint with Biome |
+| `bun lint:fix` | Auto-fix lint issues |
+| `bun format` | Format with Biome |
+| `bun db:migrate` | Apply Drizzle migrations to your Neon database |
+| `bun db:studio` | Open Drizzle Studio (GUI for your DB) |
+| `bun db:generate` | Generate a new SQL migration from the schema |
 
 ## Project Structure
 
@@ -221,8 +221,8 @@ This is a standard Next.js app. Deploy to Vercel, Netlify, or any Node host:
 | Problem | Fix |
 | --- | --- |
 | `DATABASE_URL is not set` | Make sure `.env.local` exists and contains the connection string |
-| `Module not found` after install | Delete `node_modules` and `pnpm-lock.yaml`, then `pnpm install` |
-| Port 3000 in use | Run `pnpm dev -- -p 3001` instead |
+| `Module not found` after install | Delete `node_modules` and `bun.lock`, then `bun install` |
+| Port 3000 in use | Run `bun dev -- -p 3001` instead |
 | Images not loading | Check `next.config.ts` — add the image host to `remotePatterns` |
 | Drizzle push fails | Verify the connection string is correct and ends with `?sslmode=require` |
 

@@ -24,7 +24,7 @@ next-env.d.ts.bak
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+bun-debug.log*
 
 # local env files
 .env
@@ -38,6 +38,3 @@ pnpm-debug.log*
 
 # typescript
 *.tsbuildinfo
-
-# drizzle
-drizzle/meta/

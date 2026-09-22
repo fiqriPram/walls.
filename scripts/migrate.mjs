@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs"
+import { existsSync, readFileSync, readdirSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { neon } from "@neondatabase/serverless"
@@ -6,11 +6,12 @@ import { config } from "dotenv"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-config({ path: join(__dirname, "..", ".env.local") })
+const envLocal = join(__dirname, "..", ".env.local")
+config({ path: existsSync(envLocal) ? envLocal : join(__dirname, "..", ".env") })
 
 const url = process.env.DATABASE_URL
 if (!url) {
-	console.error("DATABASE_URL not set in .env.local")
+	console.error("DATABASE_URL not set in .env")
 	process.exit(1)
 }
 

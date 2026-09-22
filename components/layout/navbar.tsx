@@ -1,8 +1,8 @@
 "use client"
 
-import { Heart, Library, type LucideIcon } from "lucide-react"
+import { Heart, Library, LogOut, type LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { authClient } from "@/lib/auth-client"
 import { CONFIG } from "@/lib/config"
@@ -19,8 +19,7 @@ type NavLink = {
 const guestLinks: NavLink[] = [
 	{ href: "/", label: "Home" },
 	{ href: "/about", label: "About" },
-	{ href: "/login", label: "Login" },
-	{ href: "/register", label: "Register" },
+	{ href: "/auth", label: "Sign in" },
 ]
 
 const authLinks: NavLink[] = [
@@ -30,8 +29,15 @@ const authLinks: NavLink[] = [
 
 export function Navbar() {
 	const pathname = usePathname()
+	const router = useRouter()
 	const { data: session } = authClient.useSession()
 	const isAuthed = session?.user != null
+
+	const handleSignOut = async () => {
+		await authClient.signOut()
+		router.push("/")
+		router.refresh()
+	}
 
 	return (
 		<header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -65,6 +71,18 @@ export function Navbar() {
 							</Link>
 						)
 					})}
+					{isAuthed && (
+						<button
+							type="button"
+							onClick={handleSignOut}
+							className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+						>
+							<span className="flex items-center gap-1.5">
+								<LogOut className="h-3.5 w-3.5" />
+								Sign out
+							</span>
+						</button>
+					)}
 					<div className="ml-2">
 						<ThemeToggle />
 					</div>

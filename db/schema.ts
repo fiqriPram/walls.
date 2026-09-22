@@ -40,7 +40,6 @@ export const accounts = pgTable(
 	"account",
 	{
 		id: text("id").primaryKey(),
-		issuer: text("issuer").notNull(),
 		accountId: text("account_id").notNull(),
 		providerId: text("provider_id").notNull(),
 		userId: text("user_id")
@@ -57,10 +56,19 @@ export const accounts = pgTable(
 		updatedAt: timestamp("updated_at").defaultNow().notNull(),
 	},
 	(table) => [
-		uniqueIndex("account_issuer_accountId_uidx").on(table.issuer, table.accountId),
+		uniqueIndex("account_provider_account_uidx").on(table.providerId, table.accountId),
 		index("account_userId_idx").on(table.userId),
 	],
 )
+
+export const verifications = pgTable("verification", {
+	id: text("id").primaryKey(),
+	identifier: text("identifier").notNull(),
+	value: text("value").notNull(),
+	expiresAt: timestamp("expires_at").notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+})
 
 export const wallpapers = pgTable(
 	"wallpapers",
