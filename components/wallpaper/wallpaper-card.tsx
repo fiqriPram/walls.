@@ -120,6 +120,33 @@ export function WallpaperCard({ item, onOpen }: WallpaperCardProps) {
 			<div className="px-3 py-2">
 				<p className="truncate text-sm font-medium">{item.title}</p>
 				<p className="truncate text-xs text-muted-foreground">{item.author}</p>
+				{item.tags.length > 0 ? (
+					<div className="mt-1.5 flex flex-wrap gap-1">
+						{item.tags.slice(0, 3).map((t) => (
+							<Badge
+								key={t}
+								variant="outline"
+								className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground"
+							>
+								{t}
+							</Badge>
+						))}
+					</div>
+				) : (
+					item.colors &&
+					item.colors.length > 0 && (
+						<div className="mt-1.5 flex items-center gap-1">
+							{item.colors.slice(0, 5).map((c) => (
+								<span
+									key={c}
+									title={c}
+									className="h-3 w-3 rounded-full border border-border/60"
+									style={{ backgroundColor: c }}
+								/>
+							))}
+						</div>
+					)
+				)}
 			</div>
 		</article>
 	)

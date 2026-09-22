@@ -12,6 +12,7 @@ export interface WallpaperItem {
 	height: number
 	tags: string[]
 	description?: string
+	colors?: string[]
 }
 
 export interface FetchParams {
