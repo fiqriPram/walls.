@@ -7,7 +7,7 @@ export function Footer() {
 				<p>
 					© {new Date().getFullYear()} {CONFIG.appName} Crafted with care.
 				</p>
-				<p className="text-xs">Images via Picsum, Nekos API & Studio Ghibli API.</p>
+				<p className="text-xs">Images via Wallhaven & community uploads.</p>
 			</div>
 		</footer>
 	)

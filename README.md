@@ -106,9 +106,8 @@ walls/
 ├── lib/
 │   ├── sources/            # ⭐ Pluggable wallpaper sources
 │   │   ├── base.ts         # Abstract Source class
-│   │   ├── picsum.ts
-│   │   ├── waifu.ts
-│   │   ├── ghibli.ts
+│   │   ├── upload.ts       # DB-backed community uploads
+│   │   ├── wallhaven.ts    # Wallhaven API (free, no key)
 │   │   └── index.ts        # Source registry
 │   ├── config.ts           # App-wide config
 │   ├── categories.ts       # Category list
@@ -137,7 +136,7 @@ Create `lib/sources/my-source.ts`:
 
 ```ts
 import { BaseSource } from "./base";
-import type { FetchParams, FetchResult, ImageSize, WallpaperItem } from "../types";
+import type { FetchParams, FetchResult, WallpaperItem } from "../types";
 
 export class MySource extends BaseSource {
 	readonly id = "my-source" as const;
@@ -145,8 +144,9 @@ export class MySource extends BaseSource {
 	readonly categories = ["my-cat"];
 
 	async fetch(params: FetchParams): Promise<FetchResult> {
-		const res = await fetch(`https://api.example.com/wallpapers?page=${params.page}&limit=${params.limit}`);
-		const data = await res.json();
+		const data = await this.getJson<{ results: any[]; has_more: boolean }>(
+			`https://api.example.com/wallpapers?page=${params.page}&limit=${params.limit}`,
+		);
 		const items: WallpaperItem[] = data.results.map((r: any) => ({
 			id: r.id,
 			source: "my-source",
@@ -161,14 +161,6 @@ export class MySource extends BaseSource {
 		}));
 		return { items, hasMore: data.has_more };
 	}
-
-	getImageUrl(item: WallpaperItem, size: ImageSize): string {
-		return item.full;
-	}
-
-	getDownloadUrl(item: WallpaperItem): string {
-		return item.download;
-	}
 }
 ```
 
@@ -179,9 +171,8 @@ Edit `lib/sources/index.ts`:
 ```ts
 import { MySource } from "./my-source";
 
-const sources: Record<string, BaseSource> = {
-	picsum: new PicsumSource(),
-	ghibli: new GhibliSource(),
+const sources: Record<SourceId, BaseSource> = {
+	// ...
 	"my-source": new MySource(),
 };
 ```
@@ -191,7 +182,7 @@ const sources: Record<string, BaseSource> = {
 Edit `lib/types.ts`:
 
 ```ts
-export type SourceId = "picsum" | "waifu" | "ghibli" | "my-source";
+export type SourceId = "upload" | "wallhaven" | "my-source";
 ```
 
 ### 4. Add a category

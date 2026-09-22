@@ -1,6 +1,6 @@
 "use client"
 
-import { Image, Layers, Loader2, LogOut, Plus, Search, Sparkles, Trash2, X } from "lucide-react"
+import { Image, Loader2, Plus, Search, Sparkles, Trash2, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
@@ -19,7 +19,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { authClient } from "@/lib/auth-client"
 import { CATEGORIES } from "@/lib/categories"
-import { cn } from "@/lib/utils"
 
 interface WallpaperEntry {
 	id: number
@@ -54,7 +53,6 @@ export default function DashboardPage() {
 	const [loading, setLoading] = useState(true)
 	const [uploading, setUploading] = useState(false)
 	const [showForm, setShowForm] = useState(false)
-	const [filter, setFilter] = useState("all")
 	const [query, setQuery] = useState("")
 
 	const [form, setForm] = useState(EMPTY_FORM)
@@ -89,7 +87,6 @@ export default function DashboardPage() {
 	const visibleWallpapers = useMemo(() => {
 		const q = query.trim().toLowerCase()
 		return wallpapers.filter((w) => {
-			if (filter !== "all" && w.category !== filter) return false
 			if (!q) return true
 			return (
 				w.title.toLowerCase().includes(q) ||
@@ -97,10 +94,9 @@ export default function DashboardPage() {
 				w.category.toLowerCase().includes(q)
 			)
 		})
-	}, [wallpapers, filter, query])
+	}, [wallpapers, query])
 
 	const newestWallpaper = wallpapers[0]?.title ?? "—"
-	const totalCategories = selectableCategories.length
 
 	const handleUpload = async () => {
 		if (!form.title || !form.thumbUrl || !form.fullUrl) {
@@ -128,7 +124,6 @@ export default function DashboardPage() {
 			toast.success("Wallpaper uploaded")
 			setForm(EMPTY_FORM)
 			setShowForm(false)
-			setFilter("all")
 			setQuery("")
 			fetchWallpapers()
 		} catch (e) {
@@ -147,11 +142,6 @@ export default function DashboardPage() {
 		} catch {
 			toast.error("Failed to delete")
 		}
-	}
-
-	const handleLogout = async () => {
-		await authClient.signOut()
-		router.push("/auth")
 	}
 
 	const toggleForm = () => setShowForm((v) => !v)
@@ -178,10 +168,6 @@ export default function DashboardPage() {
 					</p>
 				</div>
 				<div className="flex items-center gap-2">
-					<Button onClick={handleLogout} variant="ghost" size="sm">
-						<LogOut className="mr-1.5 h-4 w-4" />
-						Logout
-					</Button>
 					<Button onClick={toggleForm} size="sm" className="px-4">
 						{showForm ? <X className="mr-1.5 h-4 w-4" /> : <Plus className="mr-1.5 h-4 w-4" />}
 						{showForm ? "Close" : "Add Wallpaper"}
@@ -189,7 +175,7 @@ export default function DashboardPage() {
 				</div>
 			</div>
 
-			<div className="relative mt-8 grid gap-4 sm:grid-cols-3">
+			<div className="relative mt-8 grid gap-4 sm:grid-cols-2">
 				<Card className="overflow-hidden">
 					<CardContent className="flex items-center gap-4 p-5">
 						<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-secondary">
@@ -198,17 +184,6 @@ export default function DashboardPage() {
 						<div className="min-w-0">
 							<p className="text-xs font-medium text-muted-foreground">Total wallpapers</p>
 							<p className="text-2xl font-semibold tracking-tighter">{wallpapers.length}</p>
-						</div>
-					</CardContent>
-				</Card>
-				<Card className="overflow-hidden">
-					<CardContent className="flex items-center gap-4 p-5">
-						<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-secondary">
-							<Layers className="h-5 w-5 text-muted-foreground" />
-						</div>
-						<div className="min-w-0">
-							<p className="text-xs font-medium text-muted-foreground">Categories</p>
-							<p className="text-2xl font-semibold tracking-tighter">{totalCategories}</p>
 						</div>
 					</CardContent>
 				</Card>
@@ -430,24 +405,6 @@ export default function DashboardPage() {
 							className="pl-9"
 						/>
 					</div>
-				</div>
-
-				<div className="mt-4 flex flex-wrap items-center gap-1.5">
-					{["all", ...selectableCategories.map((c) => c.id)].map((id) => (
-						<button
-							key={id}
-							type="button"
-							onClick={() => setFilter(id)}
-							className={cn(
-								"rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-								filter === id
-									? "border-transparent bg-foreground text-background"
-									: "border-border/60 text-muted-foreground hover:text-foreground",
-							)}
-						>
-							{id === "all" ? "All" : categoryLabel(id)}
-						</button>
-					))}
 				</div>
 
 				<div className="mt-6">

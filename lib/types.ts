@@ -1,4 +1,4 @@
-export type SourceId = "upload"
+export type SourceId = "upload" | "wallhaven"
 
 export interface WallpaperItem {
 	id: string
