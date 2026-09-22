@@ -9,7 +9,7 @@ import { CATEGORIES } from "@/lib/categories"
 import { CONFIG } from "@/lib/config"
 
 const FEATURES = [
-	{ icon: Image, label: "Curated Collection", desc: "Hand-picked wallpapers across 3 sources" },
+	{ icon: Image, label: "Curated Collection", desc: "Hand-picked wallpapers across sources" },
 	{ icon: Heart, label: "Favorites", desc: "Save and sync across devices" },
 	{ icon: Download, label: "Free Download", desc: "No sign-up required" },
 ]
@@ -47,14 +47,6 @@ export function Hero() {
 
 	return (
 		<section className="relative overflow-hidden border-b border-border/40">
-			<div className="absolute inset-0 -z-10 bg-linear-to-b from-muted/50 via-background to-background" />
-
-			<div className="absolute inset-0 -z-10 overflow-hidden">
-				<div className="pointer-events-none absolute -top-40 left-1/2 h-150 w-150 -translate-x-1/2 rounded-full bg-muted/30 blur-3xl" />
-				<div className="pointer-events-none absolute -bottom-20 left-1/4 h-75 w-75 rounded-full bg-muted/20 blur-3xl" />
-				<div className="pointer-events-none absolute -bottom-20 right-1/4 h-75 w-75 rounded-full bg-muted/20 blur-3xl" />
-			</div>
-
 			<div className="mx-auto flex min-h-[60vh] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
 				<div className="mb-4 flex items-center gap-2">
 					<Layers className="h-5 w-5 text-muted-foreground" />
